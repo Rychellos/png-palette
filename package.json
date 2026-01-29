@@ -1,6 +1,6 @@
 {
   "name": "@rychellos/png-palette",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Small library to work with palette based pngs.",
   "main": "dist/PNGPaletteImage.cjs",
   "module": "dist/PNGPaletteImage.js",

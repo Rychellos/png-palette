@@ -58,7 +58,7 @@ export class PNGPaletteImage {
             } else if (type === 'IEND') {
                 break;
             }
-            
+
             pos += 12 + length;
         }
 
@@ -79,15 +79,12 @@ export class PNGPaletteImage {
         const inflated = pako.inflate(combinedIdat);
         const stride = width + 1;
         for (let y = 0; y < height; y++) {
-            // Internal parser unfiltering (Manual Logic)
-            // Since we use Filter Type 0 in our encoder, we skip unfiltering complexity for now.
-            // But we MUST support Filter 0 correctly by skipping the first byte of each row.
             const filterType = inflated[y * stride];
             const rowData = inflated.subarray(y * stride + 1, y * stride + 1 + width);
+
             if (filterType === 0) {
                 img.pixels.set(rowData, y * width);
             } else {
-                // Warning: other filter types not yet robustly supported for external files.
                 img.pixels.set(rowData, y * width);
             }
         }
@@ -95,34 +92,55 @@ export class PNGPaletteImage {
         return img;
     }
 
+    /**
+     * Sets color in color palette.
+     */
     public setPaletteColor(index: number, r: number, g: number, b: number): void {
         if (index < 0 || index >= this.maxColors) throw new Error(`Palette index ${index} out of bounds`);
         this.palette[index] = { r, g, b };
     }
 
+    /**
+     * Gets color from color palette.
+     */
     public getPaletteColor(index: number): RGB | undefined {
         return this.palette[index];
     }
 
+    /**
+     * Sets alpha value in color palette.
+     */
     public setTransparency(index: number, alpha: number): void {
         if (index < 0 || index >= this.maxColors) throw new Error(`Transparency index ${index} out of bounds`);
         this.transparency[index] = alpha;
     }
 
+    /**
+     * Gets alpha value from color palette.
+     */
     public getTransparency(index: number): number | undefined {
         return this.transparency[index];
     }
 
+    /**
+     * Sets color index at image's x & y.
+     */
     public setPixelPaletteIndex(x: number, y: number, colorIndex: number): void {
         if (x < 0 || x >= this.width || y < 0 || y >= this.height) return;
         this.pixels[y * this.width + x] = colorIndex;
     }
 
+    /**
+     * Gets color index at image's x & y.
+     */
     public getPixelPaletteIndex(x: number, y: number): number {
         if (x < 0 || x >= this.width || y < 0 || y >= this.height) return 0;
         return this.pixels[y * this.width + x]!;
     }
 
+    /**
+     * Returns encoded png bytes
+     */
     public encodeToPngBytes(): Uint8Array {
         const signature = new Uint8Array([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]);
         const ihdrData = new Uint8Array(13);
@@ -132,8 +150,8 @@ export class PNGPaletteImage {
         ihdrData[8] = 8; ihdrData[9] = 3;
         const ihdr = this.createChunk('IHDR', ihdrData);
 
-        const plteData = new Uint8Array(256 * 3);
-        for (let i = 0; i < 256; i++) {
+        const plteData = new Uint8Array(this.maxColors * 3);
+        for (let i = 0; i < this.maxColors; i++) {
             const color = this.palette[i] || { r: 0, g: 0, b: 0 };
             plteData[i * 3] = color.r;
             plteData[i * 3 + 1] = color.g;
@@ -143,9 +161,9 @@ export class PNGPaletteImage {
 
         let trns: Uint8Array | null = null;
         if (this.transparency.length > 0) {
-            const trnsData = new Uint8Array(256);
+            const trnsData = new Uint8Array(this.maxColors);
             trnsData.fill(255);
-            for (let i = 0; i < 256; i++) {
+            for (let i = 0; i < this.maxColors; i++) {
                 if (this.transparency[i] !== undefined) trnsData[i] = this.transparency[i]!;
             }
             trns = this.createChunk('tRNS', trnsData);

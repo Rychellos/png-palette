@@ -50,4 +50,26 @@ describe('PNGPaletteImage', () => {
 
         expect(decodedImg.getTransparency(5)).toBe(128);
     });
+    
+    it('should respect maxColors in the encoded PNG (Short Palette)', () => {
+        const img = new PNGPaletteImage(1, 1, 8);
+        img.setPaletteColor(0, 255, 255, 255);
+        img.setPixelPaletteIndex(0, 0, 0);
+
+        const pngBytes = img.encodeToPngBytes();
+
+        let plteSize = -1;
+        const view = new DataView(pngBytes.buffer, pngBytes.byteOffset, pngBytes.byteLength);
+        for (let i = 8; i < pngBytes.length - 12;) {
+            const len = view.getUint32(i, false);
+            const type = String.fromCharCode(pngBytes[i + 4], pngBytes[i + 5], pngBytes[i + 6], pngBytes[i + 7]);
+            if (type === 'PLTE') {
+                plteSize = len;
+                break;
+            }
+            i += 12 + len;
+        }
+
+        expect(plteSize).toBe(24);
+    });
 });
