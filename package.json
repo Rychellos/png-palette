@@ -1,7 +1,7 @@
 {
   "name": "png-palette",
-  "version": "1.1.1",
-  "description": "Small library to work with palette based pngs.",
+  "version": "1.1.2",
+  "description": "Small library to help working with palette based PNGs.",
   "main": "dist/PNGPaletteImage.cjs",
   "module": "dist/PNGPaletteImage.js",
   "types": "dist/PNGPaletteImage.d.ts",
