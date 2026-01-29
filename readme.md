@@ -52,25 +52,6 @@ const loadedImg = PNGPaletteImage.fromPngBytes(pngBytes);
 console.log(`Loaded image size: ${loadedImg.width}x${loadedImg.height}`);
 ```
 
-## API Reference
-
-### `PNGPaletteImage`
-
-The main class representing a palette-based PNG image.
-
-#### Constructor
-- `new PNGPaletteImage(width: number, height: number, maxColors?: number)`: Creates a new image. Default `maxColors` is 256.
-
-#### Methods
-- `static fromPngBytes(bytes: Uint8Array): PNGPaletteImage`: Decodes a PNG file from a byte array.
-- `setPaletteColor(index: number, r: number, g: number, b: number): void`: Sets the RGB value for a specific palette index (0-255).
-- `getPaletteColor(index: number): RGB | undefined`: Gets the RGB value for a specific palette index.
-- `setTransparency(index: number, alpha: number): void`: Sets the alpha value (0-255) for a specific palette index.
-- `getTransparency(index: number): number | undefined`: Gets the alpha value for a specific palette index.
-- `setPixelPaletteIndex(x: number, y: number, colorIndex: number): void`: Sets the palette index for a specific pixel.
-- `getPixelPaletteIndex(x: number, y: number): number`: Gets the palette index for a specific pixel.
-- `encodeToPngBytes(): Uint8Array`: Encodes the current image and palette into a standard PNG file byte array.
-
 ## Development
 
 ### Build
@@ -82,6 +63,3 @@ npm run build
 ```bash
 npm test
 ```
-
-## License
-ISC
