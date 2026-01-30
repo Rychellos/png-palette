@@ -7,6 +7,10 @@ export interface RGB {
     b: number;
 }
 
+export interface RGBA extends RGB {
+    a: number;
+}
+
 export class PNGPaletteImage {
     private palette: RGB[] = [];
     private transparency: number[] = [];
@@ -18,6 +22,18 @@ export class PNGPaletteImage {
         public readonly maxColors: number = 256
     ) {
         this.pixels = new Uint8Array(width * height);
+    }
+
+    /**
+     * Get RGBA palete
+     */
+    public getPalette(): RGBA[] {
+        return this.palette.map((color, index) => ({
+            r: color.r,
+            g: color.g,
+            b: color.b,
+            a: this.transparency[index] ?? 255
+        }));
     }
 
     /**
