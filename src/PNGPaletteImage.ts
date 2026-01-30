@@ -21,6 +21,29 @@ export class PNGPaletteImage {
     }
 
     /**
+     * Get RGBA image data
+     */
+    public getImageData() {
+        const imageData = new Uint8Array(this.width * this.height * 4);
+
+        for (let index = 0; index < this.pixels.length; index++) {
+            imageData[index * 4] = this.palette[this.pixels[index]].r;
+            imageData[index * 4 + 1] = this.palette[this.pixels[index]].g;
+            imageData[index * 4 + 2] = this.palette[this.pixels[index]].b;
+            imageData[index * 4 + 3] = this.transparency[index];
+        }
+
+        return imageData;
+    }
+
+    /**
+     * Get raw pixel data, indexes to palette
+     */
+    public getPixels() {
+        return this.pixels;
+    }
+
+    /**
      * Creates a PNGPaletteImage from a PNG file byte array.
      */
     public static fromPngBytes(bytes: Uint8Array): PNGPaletteImage {
