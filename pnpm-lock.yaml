@@ -14,9 +14,6 @@ importers:
       pako:
         specifier: ^2.1.0
         version: 2.1.0
-      upng-js:
-        specifier: ^2.1.0
-        version: 2.1.0
     devDependencies:
       '@types/node':
         specifier: ^25.1.0
@@ -569,9 +566,6 @@ packages:
   obug@2.1.1:
     resolution: {integrity: sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ==}
 
-  pako@1.0.11:
-    resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
-
   pako@2.1.0:
     resolution: {integrity: sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==}
 
@@ -732,9 +726,6 @@ packages:
 
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
-
-  upng-js@2.1.0:
-    resolution: {integrity: sha512-d3xzZzpMP64YkjP5pr8gNyvBt7dLk/uGI67EctzDuVp4lCZyVMo0aJO6l/VDlgbInJYDY6cnClLoBp29eKWI6g==}
 
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
@@ -1211,8 +1202,6 @@ snapshots:
 
   obug@2.1.1: {}
 
-  pako@1.0.11: {}
-
   pako@2.1.0: {}
 
   pathe@2.0.3: {}
@@ -1380,10 +1369,6 @@ snapshots:
   ufo@1.6.3: {}
 
   undici-types@7.16.0: {}
-
-  upng-js@2.1.0:
-    dependencies:
-      pako: 1.0.11
 
   v8-compile-cache-lib@3.0.1: {}
 
