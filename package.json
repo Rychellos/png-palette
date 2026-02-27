@@ -1,54 +1,63 @@
 {
-  "name": "png-palette",
-  "version": "1.3.1",
-  "description": "Small library to help working with palette based PNGs.",
-  "main": "dist/PNGPaletteImage.cjs",
-  "module": "dist/PNGPaletteImage.js",
-  "types": "dist/PNGPaletteImage.d.ts",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/PNGPaletteImage.d.ts",
-      "import": "./dist/PNGPaletteImage.js",
-      "require": "./dist/PNGPaletteImage.cjs"
+    "name": "png-palette",
+    "version": "2.0.0",
+    "description": "Small library to help working with palette based PNGs.",
+    "main": "dist/PNGPaletteImage.cjs",
+    "module": "dist/PNGPaletteImage.js",
+    "types": "dist/PNGPaletteImage.d.ts",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/PNGPaletteImage.d.ts",
+            "import": "./dist/PNGPaletteImage.js",
+            "require": "./dist/PNGPaletteImage.cjs"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsup --watch",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix"
+    },
+    "keywords": [
+        "png",
+        "color-palette"
+    ],
+    "author": "Rychellos",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Rychellos/png-palette.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Rychellos/png-palette/issues"
+    },
+    "homepage": "https://github.com/Rychellos/png-palette#readme",
+    "packageManager": "pnpm@10.7.1",
+    "dependencies": {
+        "crc-32": "^1.2.2",
+        "neverthrow": "^8.2.0",
+        "pako": "^2.1.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@types/node": "^25.1.0",
+        "@types/pako": "^2.0.4",
+        "@types/upng-js": "^2.1.5",
+        "@vitest/ui": "^4.0.18",
+        "eslint": "^10.0.2",
+        "globals": "^17.3.0",
+        "jiti": "^2.6.1",
+        "prettier": "^3.8.1",
+        "ts-node": "^10.9.2",
+        "tsup": "^8.5.1",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.56.1",
+        "vitest": "^4.0.18"
     }
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "test": "vitest run",
-    "test:watch": "vitest"
-  },
-  "keywords": [
-    "png",
-    "color-palette"
-  ],
-  "author": "Rychellos",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Rychellos/png-palette.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Rychellos/png-palette/issues"
-  },
-  "homepage": "https://github.com/Rychellos/png-palette#readme",
-  "packageManager": "pnpm@10.7.1",
-  "dependencies": {
-    "crc-32": "^1.2.2",
-    "pako": "^2.1.0"
-  },
-  "devDependencies": {
-    "@types/node": "^25.1.0",
-    "@types/pako": "^2.0.4",
-    "@types/upng-js": "^2.1.5",
-    "@vitest/ui": "^4.0.18",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
-  }
 }

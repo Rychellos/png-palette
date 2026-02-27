@@ -4,10 +4,12 @@ Small library to help working with palette based PNGs. It provides low-level con
 
 ## Features
 
-- **Palette Control**: Easily set and get RGB colors in the palette.
-- **Transparency Support**: Set alpha values for individual palette indices via the `tRNS` chunk.
-- **Efficient Encoding/Decoding**: Fast round-trip between raw bytes and a manipulatable image object.
-- **Minimal Dependencies**: Lightweight with only `pako` for compression and `crc-32` for integrity checks.
+- **Great Error Handling**: Uses the `neverthrow` package for type-safe error management.
+- **Palette Control**: Easily set, get, or bulk-assign RGB(A) colors in the palette.
+- **Transparency Support**: Full control over alpha values via the `tRNS` chunk.
+- **RGBA to Indexed Conversion**: Create palette images from raw RGBA data with optional quantization.
+- **Full Filter Support**: Supports all standard PNG scanline filters for reliable decoding.
+- **Lightweight**: Uses only `pako` for compression and `crc-32` for integrity checks.
 
 ## Installation
 
@@ -27,29 +29,30 @@ import * as fs from "fs";
 const img = new PNGPaletteImage(10, 10);
 
 // 2. Define colors in the palette
-img.setPaletteColor(0, 255, 255, 255); // Index 0: White
-img.setPaletteColor(1, 255, 0, 0);     // Index 1: Red
-img.setPaletteColor(2, 0, 0, 255);     // Index 2: Blue
+img.setPaletteColor(0, 255, 255, 255);      // Index 0: White
+img.setPaletteColor(1, 255, 0, 0);          // Index 1: Red
+img.setPaletteColor(2, 0, 0, 255, 128);     // Index 2: Semi-transparent Blue
 
-// 3. Set transparency (optional)
-img.setTransparency(0, 0); // Index 0 is fully transparent
+// 3. Draw pixels using palette indices
+// Most methods return a Result object for safety
+img.setPixelPaletteIndex(5, 5, 1).unwrapOr(undefined);
 
-// 4. Draw pixels using palette indices
-for (let y = 0; y < 10; y++) {
-    for (let x = 0; x < 10; x++) {
-        img.setPixelPaletteIndex(x, y, (x + y) % 2 === 0 ? 1 : 2);
-    }
-}
-
-// 5. Encode to PNG bytes
+// 4. Encode to PNG bytes
 const pngBytes = img.encodeToPngBytes();
 
-// 6. Save to a file
+// 5. Save to a file
 fs.writeFileSync("output.png", pngBytes);
 
-// 7. Load from existing bytes
-const loadedImg = PNGPaletteImage.fromPngBytes(pngBytes);
-console.log(`Loaded image size: ${loadedImg.width}x${loadedImg.height}`);
+// 6. Load from existing bytes
+const decodeResult = PNGPaletteImage.fromPngBytes(pngBytes);
+if (decodeResult.isOk()) {
+    const loadedImg = decodeResult.value;
+    console.log(`Loaded image size: ${loadedImg.width}x${loadedImg.height}`);
+}
+
+// 7. Convert from RGBA data
+const rgba = new Uint8Array(10 * 10 * 4); // ... raw RGBA data ...
+const convertedResult = PNGPaletteImage.fromRgbaBytes(rgba, 10, 10, { quantize: true });
 ```
 
 ## Development
@@ -62,4 +65,9 @@ npm run build
 ### Run Tests
 ```bash
 npm test
+```
+
+### Linting
+```bash
+npm run lint
 ```
